@@ -1,15 +1,27 @@
 version: "3.9"
 services:
-  influxdb2:
-    image: "influxdb:2.0"
+  influxdb:
+    image: "influxdb:1.8"
     env_file: 
-      - influxdb.env
+      - ./influxdb-provisioning/influxdb.env
     ports:
       - "8086:8086"
     volumes:
       - type: volume
-        source: influxdb2
-        target: /var/lib/influxdb2
+        source: influxdb
+        target: /var/lib/influxdb
+      - ./influxdb-provisioning/:/etc/influxdb
+
+  influxdb-config:
+    image: "influxdb:1.8"
+    env_file: 
+      - ./influxdb-provisioning/influxdb.env
+    environment:
+      - HTTP_PROXY=http://influxdb:8086
+    command: influx -host influxdb -execute 'CREATE DATABASE pi'
+    depends_on:
+      - influxdb
+    restart: on-failure
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -18,12 +30,12 @@ services:
       - grafana:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
     depends_on:
-      - influxdb2
+      - influxdb
     environment:
       - GF_SECURITY_ADMIN_USER=pi
       - GF_SECURITY_ADMIN_PASSWORD=SecurePassword2137
       - GF_PATHS_CONFIG=/etc/grafana/provisioning/config.ini
 
 volumes:
-  influxdb2:
+  influxdb:
   grafana:

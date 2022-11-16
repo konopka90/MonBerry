@@ -13,5 +13,5 @@ docker compose down
 
 ## How to kill and remove data
 ```bash
-docker compose down --volume
+docker compose down --volumes
 ```

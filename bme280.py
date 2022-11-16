@@ -14,22 +14,18 @@ humidity = random.random() * 100.0
 token = "cJ6YQc3-8I43zA6V6tns5adjjCV0-176kWEoRhIolxVdjArSpYYrUaZ0Bv7_oJSP4tQhaG7RyiOb-ZJ2rG0iqw=="
 org = "pi"
 bucket = "pi"
-client = InfluxDBClient(url="http://localhost:8086", token=token)
+username = "pi"
+password = "SecurePassword2137"
+with InfluxDBClient(url="http://localhost:8086", token=f'{username}:{password}') as client:
+    with client.write_api(write_options=SYNCHRONOUS) as write_api:
+        point = Point("mem")\
+            .tag("host", "pi")\
+            .field("temperature", temperature)\
+            .field("pressure", pressure)\
+            .field("humidity", humidity)\
+            .time(datetime.utcnow(), WritePrecision.NS)
 
-def insertData(t, p, h):
-    write_api = client.write_api(write_options=SYNCHRONOUS)
-
-    point = Point("mem")\
-        .tag("host", "pi")\
-        .field("temperature", t)\
-        .field("pressure", p)\
-        .field("humidity", h)\
-        .time(datetime.utcnow(), WritePrecision.NS)
-
-    write_api.write(bucket, org, point)
-
-
-insertData(temperature, pressure, humidity)
+        write_api.write(bucket, org, point)
 
 
 
