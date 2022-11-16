@@ -2,6 +2,7 @@ version: "3.9"
 services:
   influxdb:
     image: "influxdb:1.8"
+    restart: always
     env_file: 
       - ./influxdb-provisioning/influxdb.env
     ports:
@@ -24,6 +25,7 @@ services:
     restart: on-failure
   grafana:
     image: grafana/grafana:latest
+    restart: always
     ports:
       - '3000:3000'
     volumes:
