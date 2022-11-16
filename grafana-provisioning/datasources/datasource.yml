@@ -1,0 +1,14 @@
+apiVersion: 1
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    url: http://influxdb2:8086
+    user: pi
+    secureJsonData:
+      token: cJ6YQc3-8I43zA6V6tns5adjjCV0-176kWEoRhIolxVdjArSpYYrUaZ0Bv7_oJSP4tQhaG7RyiOb-ZJ2rG0iqw==
+      password: SecurePassword2137
+    jsonData:
+      version: Flux
+      organization: pi
+      defaultBucket: pi

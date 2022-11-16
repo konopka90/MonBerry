@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  influxdb2:
+    image: "influxdb:2.0"
+    env_file: 
+      - influxdb.env
+    ports:
+      - "8086:8086"
+    volumes:
+      - type: volume
+        source: influxdb2
+        target: /var/lib/influxdb2
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./grafana-provisioning/:/etc/grafana/provisioning
+    depends_on:
+      - influxdb2
+    environment:
+      - GF_SECURITY_ADMIN_USER=pi
+      - GF_SECURITY_ADMIN_PASSWORD=SecurePassword2137
+      - GF_PATHS_CONFIG=/etc/grafana/provisioning/config.ini
+
+volumes:
+  influxdb2:
+  grafana:
