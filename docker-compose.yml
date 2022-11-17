@@ -42,11 +42,11 @@ services:
     devices:
       - "/dev/i2c-1:/dev/i2c-1"
     environment:
-      - DEVICE_PORT=1
-      - DEVICE_ADDRESS=0x76
-      - POOLING_INTERVAL=5
-      - SIMULATION_MODE=no
-      - INFLUXDB_URL=http://influxdb:8086
+      - DEVICE_PORT=${DEVICE_PORT:-1}
+      - DEVICE_ADDRESS=${DEVICE_ADDRESS:-0x76}
+      - POOLING_INTERVAL=${POLLING_INTERVAL:-5}
+      - SIMULATION_MODE=${SIMULATION_MODE:-no}
+      - INFLUXDB_URL=${INFLUXDB_URL:-http://influxdb:8086}
 volumes:
   influxdb:
   grafana:
