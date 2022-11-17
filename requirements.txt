@@ -1,0 +1,3 @@
+influxdb-client==1.34.0
+RPi.bme280==0.2.4
+smbus2

@@ -3,7 +3,7 @@ services:
   influxdb:
     image: "influxdb:1.8"
     restart: always
-    env_file: 
+    env_file:
       - ./influxdb-provisioning/influxdb.env
     ports:
       - "8086:8086"
@@ -15,19 +15,17 @@ services:
 
   influxdb-config:
     image: "influxdb:1.8"
-    env_file: 
+    env_file:
       - ./influxdb-provisioning/influxdb.env
-    environment:
-      - HTTP_PROXY=http://influxdb:8086
     command: influx -host influxdb -execute 'CREATE DATABASE pi'
     depends_on:
       - influxdb
     restart: on-failure
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:9.3.0-beta1
     restart: always
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - grafana:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
