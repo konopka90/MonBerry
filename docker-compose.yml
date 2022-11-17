@@ -35,7 +35,18 @@ services:
       - GF_SECURITY_ADMIN_USER=pi
       - GF_SECURITY_ADMIN_PASSWORD=SecurePassword2137
       - GF_PATHS_CONFIG=/etc/grafana/provisioning/config.ini
-
+  reader:
+    build: .
+    depends_on:
+      - influxdb-config
+    devices:
+      - "/dev/i2c-1:/dev/i2c-1"
+    environment:
+      - DEVICE_PORT=1
+      - DEVICE_ADDRESS=0x76
+      - POOLING_INTERVAL=5
+      - SIMULATION_MODE=no
+      - INFLUXDB_URL=http://influxdb:8086
 volumes:
   influxdb:
   grafana:

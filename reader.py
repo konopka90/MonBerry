@@ -1,5 +1,6 @@
 from sys import argv
 import os
+from time import sleep
 import smbus2
 import bme280
 import random
@@ -19,36 +20,53 @@ token = "cJ6YQc3-8I43zA6V6tns5adjjCV0-176kWEoRhIolxVdjArSpYYrUaZ0Bv7_oJSP4tQhaG7
 org = "pi"
 bucket = "pi"
 url = os.environ.get('INFLUXDB_URL', 'http://localhost:8086')
+interval = int(os.environ.get('POLLING_INTERVAL', 5))
+sim = os.environ.get('SIMULATION_MODE', 'no') == 'yes'
+device_port = int(os.environ.get('DEVICE_PORT', 1))
+device_address = int(os.environ.get('DEVICE_ADDRESS', 0x76), 0)
 
-if len(sys.argv) > 1 and sys.argv[1] == "--sim":
-    sim = True
+print('* Configuration *')
+print('INFLUXDB_URL={}'.format(url))
+print('SIMULATION_MODE={}'.format(sim))
+print('POLLING_INTERVAL={}'.format(interval))
+print('DEVICE_PORT={}'.format(device_port))
+print('DEVICE_ADDRESS={}'.format(device_address))
 
-if sim:
-    temperature = 20 + random.random() * 10
-    pressure = 1000.0 + random.random() * 10.0
-    humidity = random.random() * 100.0
-else:
-    # BME280 setup
-    port = 0
-    address = 0x76
-    bus = smbus2.SMBus(port)
-    calibration_params = bme280.load_calibration_params(bus, address)
+while True:
+    try:
+        if sim:
+            temperature = 20 + random.random() * 10
+            pressure = 1000.0 + random.random() * 10.0
+            humidity = random.random() * 100.0
+        else:
+            # BME280 setup
+            bus = smbus2.SMBus(device_port)
+            calibration_params = bme280.load_calibration_params(
+                bus, device_address)
 
-    # the sample method will take a single reading and return a
-    # compensated_reading object
-    data = bme280.sample(bus, address, calibration_params)
+            # the sample method will take a single reading and return a
+            # compensated_reading object
+            data = bme280.sample(bus, device_address, calibration_params)
 
-    temperature = data.temperature
-    pressure = data.pressure
-    humidity = data.humidity
+            temperature = data.temperature
+            pressure = data.pressure
+            humidity = data.humidity
 
-with InfluxDBClient(url=url, token=token) as client:
-    with client.write_api(write_options=SYNCHRONOUS) as write_api:
-        point = Point("mem")\
-            .tag("host", "pi")\
-            .field("temperature", temperature)\
-            .field("pressure", pressure)\
-            .field("humidity", humidity)\
-            .time(datetime.utcnow(), WritePrecision.NS)
+        with InfluxDBClient(url=url, token=token) as client:
+            with client.write_api(write_options=SYNCHRONOUS) as write_api:
+                point = Point("mem")\
+                    .tag("host", "pi")\
+                    .field("temperature", temperature)\
+                    .field("pressure", pressure)\
+                    .field("humidity", humidity)\
+                    .time(datetime.utcnow(), WritePrecision.NS)
 
-        write_api.write(bucket, org, point)
+                write_api.write(bucket, org, point)
+
+    except OSError as dev_exception:
+        print("Cannot read from device: " +
+              dev_exception.strerror + ", code: " + str(dev_exception.errno))
+    except Exception as e:
+        print("Unknown exception: " + str(e))
+
+    sleep(interval)
