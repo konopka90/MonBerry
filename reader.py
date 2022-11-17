@@ -1,3 +1,6 @@
+"""
+This module reads data from BME280 and push samples to InfluxDB database.
+"""
 import os
 import random
 from datetime import datetime
