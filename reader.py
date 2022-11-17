@@ -23,7 +23,7 @@ url = os.environ.get('INFLUXDB_URL', 'http://localhost:8086')
 interval = int(os.environ.get('POLLING_INTERVAL', 5))
 sim = os.environ.get('SIMULATION_MODE', 'no') == 'yes'
 device_port = int(os.environ.get('DEVICE_PORT', 1))
-device_address = int(os.environ.get('DEVICE_ADDRESS', 0x76), 0)
+device_address = int(os.environ.get('DEVICE_ADDRESS', '0x76'), 0)
 is_ok_counter = 0
 
 print('* Configuration *')
