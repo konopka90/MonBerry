@@ -1,9 +1,9 @@
-# raspberry-enviro
-The raspberry-enviro is a docker-compose stack to monitor temperature, humidity and pressure using RaspberryPi and BME280 sensor via i2c interface.
+# MonBerry
+The MonBerry is a docker-compose stack to monitor temperature, humidity and pressure using RaspberryPi and BME280 sensor via i2c interface.
 It supports also simulation mode where BME280 sensor is stubbed with random values.
 
 ## Overview
-The raspberry-enviro brings up several docker containers:
+The MonBerry brings up several docker containers:
 - Grafana to aggregate and visualize data
 - InfluxDB to store time series data
 - Reader to collect measurements from BME280 and push to InfluxDB database
@@ -13,7 +13,7 @@ The raspberry-enviro brings up several docker containers:
 - BME280 sensor
 
 ## Sofware requirements
-The raspberry-enviro is tested with Raspbian GNU/Linux 11 (bullseye). 
+The MonBerry is tested with Raspbian GNU/Linux 11 (bullseye). 
 
 Recommended software:
 - Docker 20.10.21
