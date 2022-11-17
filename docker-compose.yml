@@ -40,7 +40,7 @@ services:
     depends_on:
       - influxdb-config
     devices:
-      - "/dev/i2c-1:/dev/i2c-1"
+      - "/dev/i2c-${DEVICE_PORT:-1}:/dev/i2c-${DEVICE_PORT:-1}"
     environment:
       - DEVICE_PORT=${DEVICE_PORT:-1}
       - DEVICE_ADDRESS=${DEVICE_ADDRESS:-0x76}
