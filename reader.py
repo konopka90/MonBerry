@@ -16,7 +16,6 @@ temperature = 0.0
 humidity = -1
 pressure = -1
 
-TOKEN = "cJ6YQc3-8I43zA6V6tns5adjjCV0-176kWEoRhIolxVdjArSpYYrUaZ0Bv7_oJSP4tQhaG7RyiOb-ZJ2rG0iqw=="
 ORG = "pi"
 BUCKET = "pi"
 
@@ -25,6 +24,7 @@ interval = int(os.environ.get('POLLING_INTERVAL', 5))
 sim = os.environ.get('SIMULATION_MODE', 'no') == 'yes'
 device_port = int(os.environ.get('DEVICE_PORT', 1))
 device_address = int(os.environ.get('DEVICE_ADDRESS', '0x76'), 0)
+token = os.environ.get('INFLUXDB_TOKEN', 'cJ6YQc3-8I43zA6V6tns5adjjCV0-176kWEoRhIolxVdjArSpYYrUaZ0Bv7_oJSP4tQhaG7RyiOb-ZJ2rG0iqw==')
 is_ok_counter = 0
 
 print('* Configuration *')
@@ -52,7 +52,7 @@ while True:
             pressure = data.pressure
             humidity = data.humidity
 
-        with InfluxDBClient(url=url, token=TOKEN) as client:
+        with InfluxDBClient(url=url, token=token) as client:
             with client.write_api(write_options=SYNCHRONOUS) as write_api:
                 point = Point("mem")\
                     .tag("host", "pi")\
