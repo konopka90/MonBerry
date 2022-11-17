@@ -1,5 +1,5 @@
 # raspberry-enviro
-The raspberry-enviro is a docker-compose stack to monitor temperature, humidity and pressure using RaspberryPi and BME280 sensor.
+The raspberry-enviro is a docker-compose stack to monitor temperature, humidity and pressure using RaspberryPi and BME280 sensor via i2c interface.
 It supports also simulation mode where BME280 sensor is stubbed with random values.
 
 ## Overview
