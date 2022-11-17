@@ -24,6 +24,7 @@ interval = int(os.environ.get('POLLING_INTERVAL', 5))
 sim = os.environ.get('SIMULATION_MODE', 'no') == 'yes'
 device_port = int(os.environ.get('DEVICE_PORT', 1))
 device_address = int(os.environ.get('DEVICE_ADDRESS', 0x76), 0)
+is_ok_counter = 0
 
 print('* Configuration *')
 print('INFLUXDB_URL={}'.format(url))
@@ -63,10 +64,16 @@ while True:
 
                 write_api.write(bucket, org, point)
 
+        is_ok_counter = is_ok_counter + 1
+        if is_ok_counter == 1:
+            print("Working...")
+
     except OSError as dev_exception:
+        is_ok_counter = 0
         print("Cannot read from device: " +
               dev_exception.strerror + ", code: " + str(dev_exception.errno))
     except Exception as e:
+        is_ok_counter = 0
         print("Unknown exception: " + str(e))
 
     sleep(interval)

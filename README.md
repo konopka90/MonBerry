@@ -1,9 +1,21 @@
 # raspberry-enviro
 
+## How to build
+
+```bash
+docker compose build
+```
+
 ## How to run
 
 ```bash
 docker compose up -d
+```
+
+or use simulation mode
+
+```bash
+SIMULATION_MODE=yes docker compose up -d
 ```
 
 ## How to kill
