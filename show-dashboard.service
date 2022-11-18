@@ -1,0 +1,16 @@
+[Unit]
+Description=Raspberry Monitoring Dashboard Launcher
+After=network-online.target
+StartLimitIntervalSec=1
+StartLimitBurst=999999
+ 
+[Service]
+ExecStart=/opt/MonBerry/show-dashboard.sh
+StandardOutput=journal
+StandardError=journal
+Restart=always
+RestartSec=30
+Environment="DISPLAY=:0"
+ 
+[Install]
+WantedBy=multi-user.target
