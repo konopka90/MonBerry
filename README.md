@@ -1,6 +1,7 @@
+# MonBerry
+
 ![alt text](https://github.com/konopka90/MonBerry/blob/main/logo.png?raw=true)
 
-# MonBerry
 The MonBerry is a docker-compose stack to monitor temperature, humidity and pressure using RaspberryPi and BME280 sensor via i2c interface.
 It supports also simulation mode where BME280 sensor is stubbed with random values.
 
