@@ -85,3 +85,11 @@ Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
+
+## Details
+
+### BME280 GPIO connection
+
+MonBerry assumes that BME280 sensor is connected to I2C_1 pins (pin numbers 3, 4, 5, 6):
+
+![GPIO](https://www.framboise314.fr/wp-content/uploads/2018/02/kit_composants_GPIO_01.png)
