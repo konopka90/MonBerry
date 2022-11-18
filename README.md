@@ -14,13 +14,14 @@ The MonBerry brings up several docker containers:
 - RaspberryPi 3 (should also work with different versions)
 - BME280 sensor
 
-## Sofware requirements
+## Software requirements
 The MonBerry is tested with Raspbian GNU/Linux 11 (bullseye). 
 
 Recommended software:
 - Docker 20.10.21
 - Docker compose v2.12.2
 - Python 3.9.2
+- Chromium
 
 ## Enable i2c interface
 
@@ -62,6 +63,13 @@ docker compose down --volumes
 
 1. Go to Grafana dashboards [open dashboards](http://localhost:3000/dashboards) 
 2. Open "Temperature - Pressure - Humidity" dashboard.
+
+## How to install systemd service
+Systemd service "show-dashboard.service" launches chromium-browser in kiosk mode at RaspberryPi startup and automatically shows Grafana dashboard.
+
+```bash
+sudo ./install.sh
+```
 
 ## Development
 
