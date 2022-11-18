@@ -10,6 +10,8 @@ StandardOutput=journal
 StandardError=journal
 Restart=always
 RestartSec=30
+User=
+Group=
 Environment="DISPLAY=:0"
  
 [Install]
