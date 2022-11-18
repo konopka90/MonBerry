@@ -37,6 +37,7 @@ services:
       - GF_PATHS_CONFIG=/etc/grafana/provisioning/config.ini
   reader:
     build: .
+    restart: always
     depends_on:
       - influxdb-config
     devices:
@@ -44,7 +45,7 @@ services:
     environment:
       - DEVICE_PORT=${DEVICE_PORT:-1}
       - DEVICE_ADDRESS=${DEVICE_ADDRESS:-0x76}
-      - POOLING_INTERVAL=${POLLING_INTERVAL:-5}
+      - POOLING_INTERVAL=${POLLING_INTERVAL:-60}
       - SIMULATION_MODE=${SIMULATION_MODE:-no}
       - INFLUXDB_URL=${INFLUXDB_URL:-http://influxdb:8086}
       - INFLUXDB_TOKEN=${INFLUXDB_TOKEN:-cJ6YQc3-8I43zA6V6tns5adjjCV0-176kWEoRhIolxVdjArSpYYrUaZ0Bv7_oJSP4tQhaG7RyiOb-ZJ2rG0iqw==}
