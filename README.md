@@ -1,24 +1,33 @@
 # MonBerry
 
-![alt text](https://github.com/konopka90/MonBerry/blob/main/logo.png?raw=true)
+![logo](https://github.com/konopka90/MonBerry/blob/main/assets/logo.png?raw=true)
 
 ## Overview
+
 The MonBerry is a docker-compose stack to monitor temperature, humidity and pressure using RaspberryPi and BME280 sensor via i2c interface.
 It supports also simulation mode where BME280 sensor is stubbed with random values.
 
 The MonBerry brings up several docker containers:
+
 - Grafana to aggregate and visualize data
 - InfluxDB to store time series data
 - Reader to collect measurements from BME280 and push to InfluxDB database
 
+## Example measurements
+
+![logo](https://github.com/konopka90/MonBerry/blob/main/assets/grafana.png?raw=true)
+
 ## Hardware requirements
+
 - RaspberryPi 3 (should also work with different versions)
 - BME280 sensor
 
 ## Software requirements
-The MonBerry is tested with Raspbian GNU/Linux 11 (bullseye). 
+
+The MonBerry is tested with Raspbian GNU/Linux 11 (bullseye).
 
 Recommended software:
+
 - Docker 20.10.21
 - Docker compose v2.12.2
 - Python 3.9.2
@@ -62,10 +71,11 @@ docker compose down --volumes
 
 ## How to show visualization
 
-1. Go to Grafana dashboards [open dashboards](http://localhost:3000/dashboards) 
+1. Go to Grafana dashboards [open dashboards](http://localhost:3000/dashboards)
 2. Open "Temperature - Pressure - Humidity" dashboard.
 
 ## How to install systemd service
+
 Systemd service "show-dashboard.service" launches chromium-browser in kiosk mode at RaspberryPi startup and automatically shows Grafana dashboard.
 
 ```bash
