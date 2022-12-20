@@ -17,6 +17,10 @@ The MonBerry brings up several docker containers:
 
 ![logo](https://github.com/konopka90/MonBerry/blob/main/assets/grafana.png?raw=true)
 
+## Some pictures
+
+![p1](https://github.com/konopka90/MonBerry/blob/main/assets/received_1125791828116685.jpeg?raw=true) 
+
 ## Hardware requirements
 
 - RaspberryPi 3 (should also work with different versions)
